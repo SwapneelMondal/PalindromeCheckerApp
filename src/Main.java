@@ -1,5 +1,7 @@
 import java.util.Scanner;
-import java.util.Stack;   // <-- Added for UC5
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -19,30 +21,26 @@ public class Main {
         return true;
     }
 
-    // -------------------- UC3: New Method Added --------------------
-    // Palindrome Check Using String Reverse (for loop + concatenation)
+    // -------------------- UC3: Reverse Method --------------------
     public static boolean isPalindromeUsingReverse(String str) {
         str = str.toLowerCase(); // ignore case
 
         String reversed = "";
 
-        // Reverse using for loop
         for (int i = str.length() - 1; i >= 0; i--) {
-            reversed = reversed + str.charAt(i); // String concatenation
+            reversed = reversed + str.charAt(i);
         }
 
-        // Compare using equals()
         return str.equals(reversed);
     }
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
 
 
     // -------------------- UC4: Character Array Method --------------------
-    // Palindrome Check Using Character Array (char[])
     public static boolean isPalindromeUsingCharArray(String str) {
-        str = str.toLowerCase(); // ignore case
+        str = str.toLowerCase();
 
-        char[] arr = str.toCharArray(); // Convert to character array
+        char[] arr = str.toCharArray();
 
         int left = 0;
         int right = arr.length - 1;
@@ -61,25 +59,45 @@ public class Main {
 
 
     // ==================== UC5: Stack-Based Method ====================
-    // Palindrome Check Using Stack (LIFO Principle)
     public static boolean isPalindromeUsingStack(String str) {
-        str = str.toLowerCase(); // ignore case
+        str = str.toLowerCase();
 
         Stack<Character> stack = new Stack<>();
 
-        // Push all characters into stack
         for (int i = 0; i < str.length(); i++) {
-            stack.push(str.charAt(i));  // Push operation
+            stack.push(str.charAt(i));
         }
 
-        // Pop characters and build reversed string
         String reversed = "";
         while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();  // Pop operation
+            reversed = reversed + stack.pop();
         }
 
-        // Compare original and reversed string
         return str.equals(reversed);
+    }
+    // =================================================================
+
+
+    // ==================== UC6: Queue + Stack Method ====================
+    public static boolean isPalindromeUsingQueueAndStack(String str) {
+        str = str.toLowerCase();
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            queue.add(ch);     // Enqueue (FIFO)
+            stack.push(ch);    // Push (LIFO)
+        }
+
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
     }
     // =================================================================
 
@@ -90,34 +108,41 @@ public class Main {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Using Original Method
+        // UC1 - Two Pointer
         if (isPalindrome(input)) {
             System.out.println("Palindrome (Two Pointer Method)");
         } else {
             System.out.println("Not Palindrome (Two Pointer Method)");
         }
 
-        // Using UC3 Reverse Method
+        // UC3 - Reverse
         if (isPalindromeUsingReverse(input)) {
             System.out.println("Palindrome (Reverse Method - UC3)");
         } else {
             System.out.println("Not Palindrome (Reverse Method - UC3)");
         }
 
-        // -------------------- UC4 Call Added --------------------
+        // UC4 - Character Array
         if (isPalindromeUsingCharArray(input)) {
             System.out.println("Palindrome (Character Array Method - UC4)");
         } else {
             System.out.println("Not Palindrome (Character Array Method - UC4)");
         }
-        // --------------------------------------------------------
 
-        // ==================== UC5 Call Added ====================
+        // UC5 - Stack
         if (isPalindromeUsingStack(input)) {
             System.out.println("Palindrome (Stack Method - UC5)");
         } else {
             System.out.println("Not Palindrome (Stack Method - UC5)");
         }
-        // ========================================================
+
+        // UC6 - Queue + Stack
+        if (isPalindromeUsingQueueAndStack(input)) {
+            System.out.println("Palindrome (Queue + Stack Method - UC6)");
+        } else {
+            System.out.println("Not Palindrome (Queue + Stack Method - UC6)");
+        }
+
+        sc.close();
     }
 }
