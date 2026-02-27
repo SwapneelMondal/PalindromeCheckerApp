@@ -35,6 +35,30 @@ public class Main {
     }
     // ---------------------------------------------------------------
 
+
+    // -------------------- UC4: Character Array Method --------------------
+    // Palindrome Check Using Character Array (char[])
+    public static boolean isPalindromeUsingCharArray(String str) {
+        str = str.toLowerCase(); // ignore case
+
+        char[] arr = str.toCharArray(); // Convert to character array
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            if (arr[left] != arr[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+    // ----------------------------------------------------------------------
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -54,5 +78,13 @@ public class Main {
         } else {
             System.out.println("Not Palindrome (Reverse Method - UC3)");
         }
+
+        // -------------------- UC4 Call Added --------------------
+        if (isPalindromeUsingCharArray(input)) {
+            System.out.println("Palindrome (Character Array Method - UC4)");
+        } else {
+            System.out.println("Not Palindrome (Character Array Method - UC4)");
+        }
+        // --------------------------------------------------------
     }
 }
