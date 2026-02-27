@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Existing Method (DO NOT TOUCH)
     public static boolean isPalindrome(String str) {
         str = str.toLowerCase(); // ignore case
         int left = 0;
@@ -17,15 +18,41 @@ public class Main {
         return true;
     }
 
+    // -------------------- UC3: New Method Added --------------------
+    // Palindrome Check Using String Reverse (for loop + concatenation)
+    public static boolean isPalindromeUsingReverse(String str) {
+        str = str.toLowerCase(); // ignore case
+
+        String reversed = "";
+
+        // Reverse using for loop
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed = reversed + str.charAt(i); // String concatenation
+        }
+
+        // Compare using equals()
+        return str.equals(reversed);
+    }
+    // ---------------------------------------------------------------
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
+        // Using Original Method
         if (isPalindrome(input)) {
-            System.out.println("Palindrome");
+            System.out.println("Palindrome (Two Pointer Method)");
         } else {
-            System.out.println("Not Palindrome");
+            System.out.println("Not Palindrome (Two Pointer Method)");
+        }
+
+        // Using UC3 Reverse Method
+        if (isPalindromeUsingReverse(input)) {
+            System.out.println("Palindrome (Reverse Method - UC3)");
+        } else {
+            System.out.println("Not Palindrome (Reverse Method - UC3)");
         }
     }
 }
