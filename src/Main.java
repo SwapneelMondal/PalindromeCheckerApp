@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Stack;   // <-- Added for UC5
 
 public class Main {
 
@@ -59,6 +60,30 @@ public class Main {
     // ----------------------------------------------------------------------
 
 
+    // ==================== UC5: Stack-Based Method ====================
+    // Palindrome Check Using Stack (LIFO Principle)
+    public static boolean isPalindromeUsingStack(String str) {
+        str = str.toLowerCase(); // ignore case
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push all characters into stack
+        for (int i = 0; i < str.length(); i++) {
+            stack.push(str.charAt(i));  // Push operation
+        }
+
+        // Pop characters and build reversed string
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed = reversed + stack.pop();  // Pop operation
+        }
+
+        // Compare original and reversed string
+        return str.equals(reversed);
+    }
+    // =================================================================
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -86,5 +111,13 @@ public class Main {
             System.out.println("Not Palindrome (Character Array Method - UC4)");
         }
         // --------------------------------------------------------
+
+        // ==================== UC5 Call Added ====================
+        if (isPalindromeUsingStack(input)) {
+            System.out.println("Palindrome (Stack Method - UC5)");
+        } else {
+            System.out.println("Not Palindrome (Stack Method - UC5)");
+        }
+        // ========================================================
     }
 }
