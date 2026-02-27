@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class Main {
 
@@ -102,6 +104,32 @@ public class Main {
     // =================================================================
 
 
+    // ==================== UC7: Deque-Based Method ====================
+    public static boolean isPalindromeUsingDeque(String str) {
+        str = str.toLowerCase();
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        // Insert characters
+        for (int i = 0; i < str.length(); i++) {
+            deque.addLast(str.charAt(i));
+        }
+
+        // Compare front and rear
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    // =================================================================
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -141,6 +169,13 @@ public class Main {
             System.out.println("Palindrome (Queue + Stack Method - UC6)");
         } else {
             System.out.println("Not Palindrome (Queue + Stack Method - UC6)");
+        }
+
+        // UC7 - Deque
+        if (isPalindromeUsingDeque(input)) {
+            System.out.println("Palindrome (Deque Method - UC7)");
+        } else {
+            System.out.println("Not Palindrome (Deque Method - UC7)");
         }
 
         sc.close();
