@@ -9,7 +9,7 @@ public class Main {
 
     // Existing Method (DO NOT TOUCH)
     public static boolean isPalindrome(String str) {
-        str = str.toLowerCase(); // ignore case
+        str = str.toLowerCase();
         int left = 0;
         int right = str.length() - 1;
 
@@ -23,7 +23,7 @@ public class Main {
         return true;
     }
 
-    // -------------------- UC3: Reverse Method --------------------
+    // -------------------- UC3 --------------------
     public static boolean isPalindromeUsingReverse(String str) {
         str = str.toLowerCase();
 
@@ -35,10 +35,8 @@ public class Main {
 
         return str.equals(reversed);
     }
-    // -------------------------------------------------------------
 
-
-    // -------------------- UC4: Character Array Method --------------------
+    // -------------------- UC4 --------------------
     public static boolean isPalindromeUsingCharArray(String str) {
         str = str.toLowerCase();
 
@@ -57,10 +55,8 @@ public class Main {
 
         return true;
     }
-    // ----------------------------------------------------------------------
 
-
-    // ==================== UC5: Stack-Based Method ====================
+    // -------------------- UC5 --------------------
     public static boolean isPalindromeUsingStack(String str) {
         str = str.toLowerCase();
 
@@ -77,10 +73,8 @@ public class Main {
 
         return str.equals(reversed);
     }
-    // =================================================================
 
-
-    // ==================== UC6: Queue + Stack Method ====================
+    // -------------------- UC6 --------------------
     public static boolean isPalindromeUsingQueueAndStack(String str) {
         str = str.toLowerCase();
 
@@ -101,10 +95,8 @@ public class Main {
 
         return true;
     }
-    // =================================================================
 
-
-    // ==================== UC7: Deque-Based Method ====================
+    // -------------------- UC7 --------------------
     public static boolean isPalindromeUsingDeque(String str) {
         str = str.toLowerCase();
 
@@ -125,10 +117,8 @@ public class Main {
 
         return true;
     }
-    // =================================================================
 
-
-    // ==================== UC8: Linked List Based Method ====================
+    // -------------------- UC8 --------------------
 
     static class Node {
         char data;
@@ -189,10 +179,8 @@ public class Main {
 
         return true;
     }
-    // =================================================================
 
-
-    // ==================== UC9: Recursive Palindrome Method ====================
+    // -------------------- UC9 --------------------
 
     public static boolean isPalindromeRecursive(String str, int left, int right) {
         str = str.toLowerCase();
@@ -212,14 +200,10 @@ public class Main {
         return isPalindromeRecursive(str, 0, str.length() - 1);
     }
 
-    // =================================================================
-
-
-    // ==================== UC10: Ignore Spaces & Case ====================
+    // -------------------- UC10 --------------------
 
     public static boolean isPalindromeIgnoringSpaces(String str) {
 
-        // Normalize string: remove spaces and convert to lowercase
         String normalized = str.replaceAll("\\s+", "").toLowerCase();
 
         int left = 0;
@@ -236,76 +220,102 @@ public class Main {
         return true;
     }
 
+
+    // ==================== UC11: Object-Oriented Palindrome Service ====================
+
+    static class PalindromeChecker {
+
+        public boolean checkPalindrome(String str) {
+
+            str = str.toLowerCase();
+
+            Stack<Character> stack = new Stack<>();
+
+            for (int i = 0; i < str.length(); i++) {
+                stack.push(str.charAt(i));
+            }
+
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) != stack.pop()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
     // =================================================================
 
 
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // UC1 - Two Pointer
         if (isPalindrome(input)) {
             System.out.println("Palindrome (Two Pointer Method)");
         } else {
             System.out.println("Not Palindrome (Two Pointer Method)");
         }
 
-        // UC3 - Reverse
         if (isPalindromeUsingReverse(input)) {
             System.out.println("Palindrome (Reverse Method - UC3)");
         } else {
             System.out.println("Not Palindrome (Reverse Method - UC3)");
         }
 
-        // UC4 - Character Array
         if (isPalindromeUsingCharArray(input)) {
             System.out.println("Palindrome (Character Array Method - UC4)");
         } else {
             System.out.println("Not Palindrome (Character Array Method - UC4)");
         }
 
-        // UC5 - Stack
         if (isPalindromeUsingStack(input)) {
             System.out.println("Palindrome (Stack Method - UC5)");
         } else {
             System.out.println("Not Palindrome (Stack Method - UC5)");
         }
 
-        // UC6 - Queue + Stack
         if (isPalindromeUsingQueueAndStack(input)) {
             System.out.println("Palindrome (Queue + Stack Method - UC6)");
         } else {
             System.out.println("Not Palindrome (Queue + Stack Method - UC6)");
         }
 
-        // UC7 - Deque
         if (isPalindromeUsingDeque(input)) {
             System.out.println("Palindrome (Deque Method - UC7)");
         } else {
             System.out.println("Not Palindrome (Deque Method - UC7)");
         }
 
-        // UC8 - Linked List
         if (isPalindromeUsingLinkedList(input)) {
             System.out.println("Palindrome (Linked List Method - UC8)");
         } else {
             System.out.println("Not Palindrome (Linked List Method - UC8)");
         }
 
-        // UC9 - Recursion
         if (checkPalindromeRecursive(input)) {
             System.out.println("Palindrome (Recursive Method - UC9)");
         } else {
             System.out.println("Not Palindrome (Recursive Method - UC9)");
         }
 
-        // UC10 - Ignore Spaces
         if (isPalindromeIgnoringSpaces(input)) {
             System.out.println("Palindrome (Ignore Spaces & Case - UC10)");
         } else {
             System.out.println("Not Palindrome (Ignore Spaces & Case - UC10)");
+        }
+
+        // UC11 usage
+        PalindromeChecker service = new PalindromeChecker();
+
+        if (service.checkPalindrome(input)) {
+            System.out.println("Palindrome (OOP Service - UC11)");
+        } else {
+            System.out.println("Not Palindrome (OOP Service - UC11)");
         }
 
         sc.close();
