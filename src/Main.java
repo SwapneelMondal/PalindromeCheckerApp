@@ -119,7 +119,6 @@ public class Main {
     }
 
     // -------------------- UC8 --------------------
-
     static class Node {
         char data;
         Node next;
@@ -181,17 +180,12 @@ public class Main {
     }
 
     // -------------------- UC9 --------------------
-
     public static boolean isPalindromeRecursive(String str, int left, int right) {
         str = str.toLowerCase();
 
-        if (left >= right) {
-            return true;
-        }
+        if (left >= right) return true;
 
-        if (str.charAt(left) != str.charAt(right)) {
-            return false;
-        }
+        if (str.charAt(left) != str.charAt(right)) return false;
 
         return isPalindromeRecursive(str, left + 1, right - 1);
     }
@@ -201,7 +195,6 @@ public class Main {
     }
 
     // -------------------- UC10 --------------------
-
     public static boolean isPalindromeIgnoringSpaces(String str) {
 
         String normalized = str.replaceAll("\\s+", "").toLowerCase();
@@ -220,9 +213,7 @@ public class Main {
         return true;
     }
 
-
-    // ==================== UC11: Object-Oriented Palindrome Service ====================
-
+    // ==================== UC11 ====================
     static class PalindromeChecker {
 
         public boolean checkPalindrome(String str) {
@@ -245,8 +236,69 @@ public class Main {
         }
     }
 
-    // =================================================================
+    // ==================== UC12: Strategy Pattern ====================
 
+    interface PalindromeStrategy {
+        boolean check(String str);
+    }
+
+    static class StackStrategy implements PalindromeStrategy {
+
+        public boolean check(String str) {
+
+            str = str.toLowerCase();
+            Stack<Character> stack = new Stack<>();
+
+            for (char c : str.toCharArray()) {
+                stack.push(c);
+            }
+
+            for (char c : str.toCharArray()) {
+                if (c != stack.pop()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    static class DequeStrategy implements PalindromeStrategy {
+
+        public boolean check(String str) {
+
+            str = str.toLowerCase();
+            Deque<Character> deque = new ArrayDeque<>();
+
+            for (char c : str.toCharArray()) {
+                deque.addLast(c);
+            }
+
+            while (deque.size() > 1) {
+
+                if (deque.removeFirst() != deque.removeLast()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    static class PalindromeContext {
+
+        private PalindromeStrategy strategy;
+
+        public void setStrategy(PalindromeStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        public boolean execute(String str) {
+            return strategy.check(str);
+        }
+    }
+
+    // ===============================================================
 
     public static void main(String[] args) {
 
@@ -255,68 +307,77 @@ public class Main {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        if (isPalindrome(input)) {
+        if (isPalindrome(input))
             System.out.println("Palindrome (Two Pointer Method)");
-        } else {
+        else
             System.out.println("Not Palindrome (Two Pointer Method)");
-        }
 
-        if (isPalindromeUsingReverse(input)) {
+        if (isPalindromeUsingReverse(input))
             System.out.println("Palindrome (Reverse Method - UC3)");
-        } else {
+        else
             System.out.println("Not Palindrome (Reverse Method - UC3)");
-        }
 
-        if (isPalindromeUsingCharArray(input)) {
+        if (isPalindromeUsingCharArray(input))
             System.out.println("Palindrome (Character Array Method - UC4)");
-        } else {
+        else
             System.out.println("Not Palindrome (Character Array Method - UC4)");
-        }
 
-        if (isPalindromeUsingStack(input)) {
+        if (isPalindromeUsingStack(input))
             System.out.println("Palindrome (Stack Method - UC5)");
-        } else {
+        else
             System.out.println("Not Palindrome (Stack Method - UC5)");
-        }
 
-        if (isPalindromeUsingQueueAndStack(input)) {
+        if (isPalindromeUsingQueueAndStack(input))
             System.out.println("Palindrome (Queue + Stack Method - UC6)");
-        } else {
+        else
             System.out.println("Not Palindrome (Queue + Stack Method - UC6)");
-        }
 
-        if (isPalindromeUsingDeque(input)) {
+        if (isPalindromeUsingDeque(input))
             System.out.println("Palindrome (Deque Method - UC7)");
-        } else {
+        else
             System.out.println("Not Palindrome (Deque Method - UC7)");
-        }
 
-        if (isPalindromeUsingLinkedList(input)) {
+        if (isPalindromeUsingLinkedList(input))
             System.out.println("Palindrome (Linked List Method - UC8)");
-        } else {
+        else
             System.out.println("Not Palindrome (Linked List Method - UC8)");
-        }
 
-        if (checkPalindromeRecursive(input)) {
+        if (checkPalindromeRecursive(input))
             System.out.println("Palindrome (Recursive Method - UC9)");
-        } else {
+        else
             System.out.println("Not Palindrome (Recursive Method - UC9)");
-        }
 
-        if (isPalindromeIgnoringSpaces(input)) {
+        if (isPalindromeIgnoringSpaces(input))
             System.out.println("Palindrome (Ignore Spaces & Case - UC10)");
-        } else {
+        else
             System.out.println("Not Palindrome (Ignore Spaces & Case - UC10)");
-        }
 
-        // UC11 usage
         PalindromeChecker service = new PalindromeChecker();
 
-        if (service.checkPalindrome(input)) {
+        if (service.checkPalindrome(input))
             System.out.println("Palindrome (OOP Service - UC11)");
-        } else {
+        else
             System.out.println("Not Palindrome (OOP Service - UC11)");
-        }
+
+        // ================= UC12 Usage =================
+
+        PalindromeContext context = new PalindromeContext();
+
+        context.setStrategy(new StackStrategy());
+
+        if (context.execute(input))
+            System.out.println("Palindrome (Strategy Pattern - Stack)");
+        else
+            System.out.println("Not Palindrome (Strategy Pattern - Stack)");
+
+        context.setStrategy(new DequeStrategy());
+
+        if (context.execute(input))
+            System.out.println("Palindrome (Strategy Pattern - Deque)");
+        else
+            System.out.println("Not Palindrome (Strategy Pattern - Deque)");
+
+        // =================================================
 
         sc.close();
     }
