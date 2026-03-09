@@ -89,8 +89,8 @@ public class Main {
 
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            queue.add(ch);     // Enqueue (FIFO)
-            stack.push(ch);    // Push (LIFO)
+            queue.add(ch);
+            stack.push(ch);
         }
 
         while (!queue.isEmpty()) {
@@ -110,12 +110,10 @@ public class Main {
 
         Deque<Character> deque = new ArrayDeque<>();
 
-        // Insert characters
         for (int i = 0; i < str.length(); i++) {
             deque.addLast(str.charAt(i));
         }
 
-        // Compare front and rear
         while (deque.size() > 1) {
             char front = deque.removeFirst();
             char rear = deque.removeLast();
@@ -123,6 +121,75 @@ public class Main {
             if (front != rear) {
                 return false;
             }
+        }
+
+        return true;
+    }
+    // =================================================================
+
+
+    // ==================== UC8: Linked List Based Method ====================
+
+    // Node class for singly linked list
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public static boolean isPalindromeUsingLinkedList(String str) {
+        str = str.toLowerCase();
+
+        // Convert string to linked list
+        Node head = null;
+        Node tail = null;
+
+        for (int i = 0; i < str.length(); i++) {
+            Node newNode = new Node(str.charAt(i));
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        // Find middle using fast and slow pointer
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node prev = null;
+        Node current = slow;
+
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        // Compare halves
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
+                return false;
+            }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         return true;
@@ -176,6 +243,13 @@ public class Main {
             System.out.println("Palindrome (Deque Method - UC7)");
         } else {
             System.out.println("Not Palindrome (Deque Method - UC7)");
+        }
+
+        // UC8 - Linked List
+        if (isPalindromeUsingLinkedList(input)) {
+            System.out.println("Palindrome (Linked List Method - UC8)");
+        } else {
+            System.out.println("Not Palindrome (Linked List Method - UC8)");
         }
 
         sc.close();
