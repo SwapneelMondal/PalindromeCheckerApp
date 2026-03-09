@@ -130,7 +130,6 @@ public class Main {
 
     // ==================== UC8: Linked List Based Method ====================
 
-    // Node class for singly linked list
     static class Node {
         char data;
         Node next;
@@ -144,7 +143,6 @@ public class Main {
     public static boolean isPalindromeUsingLinkedList(String str) {
         str = str.toLowerCase();
 
-        // Convert string to linked list
         Node head = null;
         Node tail = null;
 
@@ -160,7 +158,6 @@ public class Main {
             }
         }
 
-        // Find middle using fast and slow pointer
         Node slow = head;
         Node fast = head;
 
@@ -169,7 +166,6 @@ public class Main {
             fast = fast.next.next;
         }
 
-        // Reverse second half
         Node prev = null;
         Node current = slow;
 
@@ -180,7 +176,6 @@ public class Main {
             current = next;
         }
 
-        // Compare halves
         Node firstHalf = head;
         Node secondHalf = prev;
 
@@ -194,6 +189,32 @@ public class Main {
 
         return true;
     }
+    // =================================================================
+
+
+    // ==================== UC9: Recursive Palindrome Method ====================
+
+    public static boolean isPalindromeRecursive(String str, int left, int right) {
+        str = str.toLowerCase();
+
+        // Base condition
+        if (left >= right) {
+            return true;
+        }
+
+        // Character mismatch
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+
+        // Recursive call
+        return isPalindromeRecursive(str, left + 1, right - 1);
+    }
+
+    public static boolean checkPalindromeRecursive(String str) {
+        return isPalindromeRecursive(str, 0, str.length() - 1);
+    }
+
     // =================================================================
 
 
@@ -250,6 +271,13 @@ public class Main {
             System.out.println("Palindrome (Linked List Method - UC8)");
         } else {
             System.out.println("Not Palindrome (Linked List Method - UC8)");
+        }
+
+        // UC9 - Recursion
+        if (checkPalindromeRecursive(input)) {
+            System.out.println("Palindrome (Recursive Method - UC9)");
+        } else {
+            System.out.println("Not Palindrome (Recursive Method - UC9)");
         }
 
         sc.close();
