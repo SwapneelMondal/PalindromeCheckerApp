@@ -25,7 +25,7 @@ public class Main {
 
     // -------------------- UC3: Reverse Method --------------------
     public static boolean isPalindromeUsingReverse(String str) {
-        str = str.toLowerCase(); // ignore case
+        str = str.toLowerCase();
 
         String reversed = "";
 
@@ -197,22 +197,43 @@ public class Main {
     public static boolean isPalindromeRecursive(String str, int left, int right) {
         str = str.toLowerCase();
 
-        // Base condition
         if (left >= right) {
             return true;
         }
 
-        // Character mismatch
         if (str.charAt(left) != str.charAt(right)) {
             return false;
         }
 
-        // Recursive call
         return isPalindromeRecursive(str, left + 1, right - 1);
     }
 
     public static boolean checkPalindromeRecursive(String str) {
         return isPalindromeRecursive(str, 0, str.length() - 1);
+    }
+
+    // =================================================================
+
+
+    // ==================== UC10: Ignore Spaces & Case ====================
+
+    public static boolean isPalindromeIgnoringSpaces(String str) {
+
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
+
+        int left = 0;
+        int right = normalized.length() - 1;
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
     }
 
     // =================================================================
@@ -278,6 +299,13 @@ public class Main {
             System.out.println("Palindrome (Recursive Method - UC9)");
         } else {
             System.out.println("Not Palindrome (Recursive Method - UC9)");
+        }
+
+        // UC10 - Ignore Spaces
+        if (isPalindromeIgnoringSpaces(input)) {
+            System.out.println("Palindrome (Ignore Spaces & Case - UC10)");
+        } else {
+            System.out.println("Not Palindrome (Ignore Spaces & Case - UC10)");
         }
 
         sc.close();
