@@ -298,6 +298,56 @@ public class Main {
         }
     }
 
+    // ==================== UC13: Performance Comparison ====================
+
+    public static void comparePerformance(String input) {
+
+        System.out.println("\n===== UC13: Performance Comparison =====");
+
+        long start;
+        long end;
+
+        start = System.nanoTime();
+        isPalindrome(input);
+        end = System.nanoTime();
+        System.out.println("Two Pointer Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingReverse(input);
+        end = System.nanoTime();
+        System.out.println("Reverse Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingCharArray(input);
+        end = System.nanoTime();
+        System.out.println("Char Array Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingStack(input);
+        end = System.nanoTime();
+        System.out.println("Stack Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingQueueAndStack(input);
+        end = System.nanoTime();
+        System.out.println("Queue + Stack Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingDeque(input);
+        end = System.nanoTime();
+        System.out.println("Deque Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeUsingLinkedList(input);
+        end = System.nanoTime();
+        System.out.println("Linked List Method Time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        checkPalindromeRecursive(input);
+        end = System.nanoTime();
+        System.out.println("Recursive Method Time: " + (end - start) + " ns");
+    }
+
     // ===============================================================
 
     public static void main(String[] args) {
@@ -359,8 +409,6 @@ public class Main {
         else
             System.out.println("Not Palindrome (OOP Service - UC11)");
 
-        // ================= UC12 Usage =================
-
         PalindromeContext context = new PalindromeContext();
 
         context.setStrategy(new StackStrategy());
@@ -377,7 +425,8 @@ public class Main {
         else
             System.out.println("Not Palindrome (Strategy Pattern - Deque)");
 
-        // =================================================
+        // UC13 Call
+        comparePerformance(input);
 
         sc.close();
     }
